@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Student
+{
+	char ID[20];
+	char name[30];
+	int age;
+	double score;
+}stu;
+void CreateFile(stu s[],int n);
+void Readout(stu s[]);
+void Sort(stu s[], int n);
+int main()
+{
+	stu s[40];
+	int n;
+	printf("how many student ");
+	scanf_s("%d", &n);
+	CreateFile(s, n);
+	Readout(s);
+	Sort(s,n);
+	return 0;
+}
+void CreateFile(stu s[],int n)
+{
+	FILE* fp;
+	fp = fopen("D:\\Info.dat", "wb + ");
+	if (!fp)
+	{
+		printf("erro");
+		exit(1);
+	}
+    for (int i = 0; i < n; i++)
+	{
+		printf("enter the %d-th student ", i + 1);
+		scanf_s("%s%s%d%lf", &s[i].ID, &s[i].name, & s[i].age, &s[i].score);
+	}
+	fwrite(s, sizeof(stu), n, fp);
+	fclose(fp);
+}
+void Readout(stu s[])
+{
+	FILE* fp;
+	fp = fopen("D : \\Info.dat", "rb");
+	if (!fp)
+	{
+		printf("erro");
+		exit(1);
+	}
+	int i=0,n;
+	fread(&s[i], sizeof(stu), 1, fp);
+	while (!feof(fp))
+		fread(&s[i + 1], sizeof(stu), 1, fp);
+	n = i;
+	for(i=0;i<n;i++)
+		printf("%s \t%s \t%d \t%lf\n", s[i].ID, s[i].name, s[i].age, s[i].score);
+}
+void Sort(stu s[], int n)
+{
+	int i, a, j;
+	stu t;
+	for (i = 0; i < n - 1; i++)
+	{
+		a = i;
+		for (j = i + 1; j < n; j++)
+		{
+			if (s[a].score < s[j].score)
+				t = s[a], s[a] = s[j], s[j] = t;
+		}
+	}
+	for (i = 0; i < n; i++)
+		printf("%s \t%s \t%d \t%lf\n", s[i].ID, s[i].name, s[i].age, s[i].score);
+}
