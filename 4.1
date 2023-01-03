@@ -1,0 +1,60 @@
+#include <stdio.h>
+typedef struct Date
+	  {
+		int year;
+		int month;
+		int day;
+	  }Date;
+int checkDate(Date date);
+int main()
+{
+	Date s1;
+	scanf_s("%d%d%d", &s1.year,&s1.month ,&s1.day);
+	while (!checkDate(s1))
+	{
+		printf("enter again \n");
+		scanf_s("%d%d%d", &s1.year, &s1.month, &s1.day);
+	}
+	if (checkDate(s1))
+		printf("right");
+	return 0;
+}
+int checkDate(Date date)
+{
+	if (date.year > 1900 && date.year < 2018)
+	{
+		if (date.month >= 1 && date.month <= 12)
+		{
+			if (date.month == 1 || date.month == 3 || date.month == 5 || date.month == 7 || date.month == 8 || date.month == 10 || date.month == 12)
+			{
+				if (date.day >= 1 && date.day <= 31)
+					return 1;
+				else return 0;
+			}
+			if (date.month == 4 || date.month == 6 || date.month == 9 || date.month == 11)
+			{
+				if (date.day >= 1 && date.day <= 31)
+					return 1;
+				else return 0;
+			}
+			if (date.month == 2)
+			{
+				if ((date.year % 4 == 0 && date.year % 100 != 0) || date.year % 400 == 0)
+				{
+					if (date.day >= 1 && date.day <= 29)
+						return 1;
+					else return 0;
+				}
+				else 
+				{
+					if (date.day >= 1 && date.day <= 28)
+						return 1;
+					else return 0;
+				}
+			}
+		}
+		else
+			return 0;
+	}
+	else return 0;
+}
